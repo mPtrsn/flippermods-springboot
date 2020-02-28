@@ -1,5 +1,6 @@
-package de.fhw.flippermods;
+package de.fhw.flippermods.controller;
 
+import de.fhw.flippermods.model.DataPackage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,14 @@ public class SocketController {
 
     @MessageMapping("/hello/{id}")
     @SendTo("/topic/greetings/{id}")
-    public Greeting greeting(HelloMessage message) {
-        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+    public String greeting(String message) {
+        return "Hello";
     }
 
     @PostMapping("{id}")
     @SendTo("/topic/data/{id}")
     public ResponseEntity redirectMessage(@PathVariable("id") Long id, @RequestBody DataPackage dataPackage) {
+        log.info(dataPackage.getNumber() + "");
         this.template.convertAndSend("/topic/data/" + id, dataPackage);
         return ResponseEntity.ok().build();
     }
