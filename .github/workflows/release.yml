@@ -53,5 +53,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /var/docker/spring-flipper/
-            docker-compose -pull
+            docker-compose pull
             docker-compose up -d
