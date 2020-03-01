@@ -35,10 +35,10 @@ public class SocketController {
     }
 
     @PostMapping("{id}")
-    @SendTo("/topic/data/{id}")
+    @SendTo("/secured/data/{id}")
     public ResponseEntity redirectMessage(@PathVariable("id") Long id, @RequestBody DataPackage dataPackage) {
         log.info(dataPackage.getNumber() + "");
-        this.template.convertAndSend("/topic/data/" + id, dataPackage);
+        this.template.convertAndSend("/secured/data/" + id, dataPackage);
         return ResponseEntity.ok().build();
     }
 }
