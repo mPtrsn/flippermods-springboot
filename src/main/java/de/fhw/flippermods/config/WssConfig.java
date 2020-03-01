@@ -1,4 +1,4 @@
-package de.fhw.flippermods;
+package de.fhw.flippermods.config;
 
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;

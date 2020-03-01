@@ -1,4 +1,4 @@
-package de.fhw.flippermods;
+package de.fhw.flippermods.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
