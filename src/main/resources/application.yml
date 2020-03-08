@@ -9,4 +9,7 @@ spring:
     user:
       name: ich bin admin
       password: mein 1. password
+  jpa:
+    hibernate:
+      ddl-auto: update
 

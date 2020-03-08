@@ -17,12 +17,19 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableWebSecurity
 public class WebConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authProvider);
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
         http
-                .cors().disable()
+            .cors().and()
                 .csrf().disable()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
