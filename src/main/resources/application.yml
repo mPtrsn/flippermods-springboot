@@ -5,10 +5,6 @@ spring:
     url: jdbc:postgresql://twistways.com:5432/flippermods
     username: flipper
     password: das Flipper passwort1 1 elf
-  security:
-    user:
-      name: ich bin admin
-      password: mein 1. password
   jpa:
     hibernate:
       ddl-auto: update
