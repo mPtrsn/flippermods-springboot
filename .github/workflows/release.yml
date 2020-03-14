@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.11
-      - name: Unlock secrets
+      - name: Unlock secrets - git-crypt
         uses: sliteteam/github-action-git-crypt-unlock@1.0.2
         env:
           GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
