@@ -8,21 +8,24 @@ jobs:
   test:
     name: Unit Test
     runs-on: ubuntu-18.04
-
+    env:
+      GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 1.11
+      - name: load git crypt
+        run: apt-get update -y && apt-get install -y git-crypt
       - name: decrypt files
-        uses: sliteteam/github-action-git-crypt-unlock@1.0.2
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
         run: mvn -B clean verify
+      - name: encrypt files
+        run: git-crypt lock
 
   docker:
     name: Publish - Docker Hub
@@ -30,23 +33,25 @@ jobs:
     needs: [test]
     env:
       REPO: ${{ secrets.DOCKER_REPO }}
-
+      GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11.0.4
-      - name: decrypt files
-        uses: sliteteam/github-action-git-crypt-unlock@1.0.2
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+      - name: load git crypt
+          run: apt-get update -y && apt-get install -y git-crypt
+            - name: decrypt files
+              run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
       - name: Login to Docker Hub
         run: docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASS }}"
       - name: Build Docker image
         run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
       - name: Publish Docker image
-        run: docker push $REPO           
+        run: docker push $REPO
+      - name: encrypt files
+        run: git-crypt lock
   restart-container:
     name: Publish - Restart Docker Container
     runs-on: ubuntu-latest
