@@ -18,9 +18,7 @@ jobs:
       - name: load git crypt
         run: apt-get update -y && apt-get install -y git-crypt
       - name: decrypt files
-        run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: git-crypt unlock ${{ secrets.GIT_CRYPT_KEY }}
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
@@ -43,9 +41,7 @@ jobs:
       - name: load git crypt
         run: apt-get update -y && apt-get install -y git-crypt
       - name: decrypt files
-        run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: git-crypt unlock ${{ secrets.GIT_CRYPT_KEY }}
       - name: Login to Docker Hub
         run: docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASS }}"
       - name: Build Docker image
