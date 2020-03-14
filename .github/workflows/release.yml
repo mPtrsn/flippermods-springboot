@@ -8,8 +8,7 @@ jobs:
   test:
     name: Unit Test
     runs-on: ubuntu-18.04
-    env:
-      GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
@@ -20,6 +19,8 @@ jobs:
         run: apt-get update -y && apt-get install -y git-crypt
       - name: decrypt files
         run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
       - name: Maven Package
         run: mvn -B clean package -DskipTests
       - name: Maven Verify
@@ -33,7 +34,6 @@ jobs:
     needs: [test]
     env:
       REPO: ${{ secrets.DOCKER_REPO }}
-      GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
@@ -44,6 +44,8 @@ jobs:
         run: apt-get update -y && apt-get install -y git-crypt
       - name: decrypt files
         run: git-crypt unlock ${{ GIT_CRYPT_KEY }}
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
       - name: Login to Docker Hub
         run: docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASS }}"
       - name: Build Docker image
