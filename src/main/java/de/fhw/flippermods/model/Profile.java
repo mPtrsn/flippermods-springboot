@@ -25,9 +25,12 @@ public class Profile {
 
   Long tiltValue;
 
+  String authData;
+
   public Profile(ProfileInfo info) {
     this.username = info.username;
     this.passwordMD5 = info.passwordMD5;
+    this.authData = info.username + ":" + info.passwordMD5;
   }
 
 }

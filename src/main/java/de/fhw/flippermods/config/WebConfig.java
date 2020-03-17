@@ -26,20 +26,21 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception
-    {
+    protected void configure(HttpSecurity http) throws Exception {
         http
-            .cors().and()
+                .cors().and()
                 .csrf().disable()
-                .authorizeRequests().anyRequest().authenticated()
+
+                .authorizeRequests()
+                .antMatchers("/user/login").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
-            throws Exception
-    {
+            throws Exception {
         PasswordEncoder encoder =
                 PasswordEncoderFactories.createDelegatingPasswordEncoder();
         auth.inMemoryAuthentication()

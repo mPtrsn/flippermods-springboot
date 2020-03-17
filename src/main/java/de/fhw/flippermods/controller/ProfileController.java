@@ -43,7 +43,8 @@ public class ProfileController {
 
   @PostMapping("login")
   public ResponseEntity login(@RequestBody ProfileInfo info) {
-    log.debug(info.username);
+    log.info("controller: " + info.username);
+    log.info("controller: " + info.passwordMD5);
     return ResponseEntity.ok(profileService.loginUser(info));
   }
 
