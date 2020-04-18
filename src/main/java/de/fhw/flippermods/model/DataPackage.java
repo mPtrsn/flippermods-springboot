@@ -10,5 +10,5 @@ import lombok.Setter;
 public class DataPackage {
 
     int number;
-    String text;
+    int id;
 }

@@ -20,7 +20,7 @@ public class TestController {
 
     @PostMapping("data")
     public ResponseEntity sendData(@RequestBody DataPackage data){
-        log.info(data.getText());
+        log.info(data.getId() +"");
         log.info(data.getNumber() + "");
         return ResponseEntity.ok().build();
     }

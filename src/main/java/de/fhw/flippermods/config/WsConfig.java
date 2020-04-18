@@ -14,12 +14,13 @@ public class WsConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/secured");
+        config.enableSimpleBroker("/secured", "/data");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/a").setAllowedOrigins("*").withSockJS();
         registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
     }
 }
