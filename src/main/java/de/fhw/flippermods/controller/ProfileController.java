@@ -1,5 +1,6 @@
 package de.fhw.flippermods.controller;
 
+import de.fhw.flippermods.model.Profile;
 import de.fhw.flippermods.model.ProfileInfo;
 import de.fhw.flippermods.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class ProfileController {
 
 
   @PutMapping
-  public ResponseEntity createUser(@RequestBody ProfileInfo profileInfo) {
+  public ResponseEntity<Profile> createUser(@RequestBody ProfileInfo profileInfo) {
     return ResponseEntity.ok(profileService.createProfile(profileInfo));
   }
 

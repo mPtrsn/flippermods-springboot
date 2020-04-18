@@ -25,8 +25,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     String username = authentication.getName();
     String passwordMD5 = authentication.getCredentials().toString();
-    log.info(username);
-    log.info(passwordMD5);
+    log.info("authenticate {username: {}, password {}", username, passwordMD5);
 
     if (profileRepository.findByUsernameAndPasswordMD5(username, passwordMD5).isPresent()) {
       return new UsernamePasswordAuthenticationToken(username, passwordMD5, new ArrayList<>());
